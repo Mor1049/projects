@@ -1,0 +1,10 @@
+Pseudocode Plurality
+
+Print Winner Pseudocode
+
+I will iterate through the candidates to find out who has the most votes
+
+If the most votes are less than the candidate amount i will set the most votes equal to the highest amount of votes
+a candidate has received
+
+

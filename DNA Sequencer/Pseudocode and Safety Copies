@@ -1,0 +1,183 @@
+#Pseudocode and Safety Copies
+STEP1
+
+Open the CSV file and DNA Sequences and read the contents into memory
+First row of the CSV file has name as the first column and then STRs for each of the remaining columns
+Each remaining row corresponds to a person
+
+Hints: Pythons csv module has reader and DictReader.
+        Pythons sys module gives you access to sys.argv for command-line arguments
+
+        Once youve opened a text file f using open(filename), you can read its contents using f.read().
+
+STEP2
+For every STR compute longest run of consecutive repeats in DNA Sequence
+
+Compare STR counts against every row in the CSV File
+
+For every position in the sequence i need to compute how many times the STR repeats starting at that position
+- I can use the len function or take a string and get a substring from it with s[i :j]
+
+SAVE STR counts in a data structure (list or dictionary)
+
+STEP3
+For each row in the data, check if the STR count matches,
+if it matches with a person -> print out the persons name
+
+Safety Copy 08.02
+
+import csv
+import sys
+
+def main():
+# Ensure correct usage
+    if len(sys.argv) != 3:
+        sys.exit("Usage: python dna.py data.csv sequence.txt")
+
+    # Read from csv file
+    database = open(sys.argv[1])
+    data = csv.DictReader(database)
+    with open(sys.argv[2]) as f:
+        sequence = f.read()
+
+    print(sequence)
+
+    database.close()
+
+main()
+
+# Extractig the sequences from the people database into a list
+
+    database = open(sys.argv[1])
+    data = csv.DictReader(database)
+    with open(sys.argv[1]) as f2:
+        people = f2.read()
+# Copying those sequences into a dictionary
+        for item in people:
+            people[item] = 1
+# Iterating through DNA sequences using the people dictionary as keys
+
+Safety Copy 9.2.21
+
+import csv
+import sys
+
+def main():
+# Ensure correct usage
+    if len(sys.argv) != 3:
+        sys.exit("Usage: python dna.py data.csv sequence.txt")
+
+    # Read from csv file and store DNA Sequhences
+    database = open(sys.argv[1])
+    data = csv.DictReader(database)
+    with open(sys.argv[2]) as f1:
+        sequence = f1.read()
+
+# Creating a dictionary to store the sequences the program counts
+    sequences = {}
+    for consecvalue_str in data.fieldnames[1:]:
+        sequences[consecvalue_str] = longest_match(sequence, consecvalue_str)
+
+#Checking every row for a matching profile
+        for row in data:
+            if all (sequences[consecvalue_str]==int(row[consecvalue_str] for consecvalue_str in sequences)):
+                print(row["name"])
+                return
+        else:
+            print("No match found")
+            database.close
+
+def longest_match(sequence, consecvalue_str):
+    longmatch = 0
+    length = len(consecvalue)
+    for i in range(len(sequence_str)):
+        counter = 0
+        while True:
+            start = i + length * counter
+            end = length + start
+            if sequence[start:end] == consecvalue_str:
+                counter+=1
+            else:
+                break
+        longmatch = max(longmatch, counter)
+    return longmatch
+
+main()
+
+
+Safety Copy 9.2.21 14:45
+import csv
+import sys
+
+def main():
+# Ensure correct usage
+    if len(sys.argv) != 3:
+        sys.exit("Usage: python dna.py data.csv sequence.txt")
+
+    # Read from csv file and store DNA Sequences
+    database = open(sys.argv[1])
+    data = csv.DictReader(database)
+    with open(sys.argv[2]) as dnalist:
+        dnalist = f1.read()
+
+# Storing the sequences in a string
+
+    dnalist = list[0]
+
+# Creating a dictionary to store the sequences the program counts
+    sequences = {}
+
+# Extracting the sequences from the dna database to a list
+
+with open(sys.argv[1]) as peoplefile:
+    reader = txt.DictReader(peoplefile)
+    for row in people:
+        peoplerow = row
+        break
+
+for item in peoplerow:
+    sequences[item] = 1
+
+# Iterating through the sequence dictionary and counting repetitions
+
+for key in sequences:
+    k = len(key)
+    maxlength=0
+    templength=0
+    for i in range(len(dnalist)):
+        #after counting a sequence program skips to the end to avoid counting it again
+        while templegth > 0:
+            templength -=1
+            continue
+
+# Increase counter if the key finds a consecutive DNA segment
+if dnalist[i: i+k] == key:
+    while dnalist[i-k: i] == dnalist[i: i+1]:
+        templength+=1
+        i+=1
+
+# Comparing the value to previous longest sequence and replacing previous longest value if it is longer
+if templength > maxlength:
+    maxlength = templength
+
+# Storing longest sequence in a dictionary with the key
+sequences[key] += maxlength
+
+# Opening people database and checking if there is a match
+with open(argv[1]) as f2:
+    for person in f2:
+        dnamatch = 0
+# Comparing the sequences to the people and printing names
+for dnalist in sequences:
+    if sequences[dnalist] == int(person[dnalist]):
+        dnamatch += 1
+    if dnamatch == (len)(dnalist):
+        print(person["name"])
+        exit()
+    else:
+        print("No match found")
+        
+        
+        
+        
+#    sequences = dict.fromkeys(dna_sequences)

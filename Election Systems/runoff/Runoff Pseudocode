@@ -1,0 +1,14 @@
+//Runoff Pseudocode
+
+Fin Min - Pseudocode
+
+I want to iterate through the candidates and finde the one thats still in the election
+and the i want to return the minimum number of votes for that candidate
+
+I make a lowest vote variable and equal it to the first candidate
+
+I check wether currend candidate lowest vote is more than the next candidate
+
+if it is lower i update lowest vote to the next candidate
+
+i return the lowest vote total

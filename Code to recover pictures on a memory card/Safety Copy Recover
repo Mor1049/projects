@@ -1,0 +1,476 @@
+// Safety Copy of my recover code
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
+#define BLOCK_SIZE 512
+
+
+int main(int argc, char *argv[])
+{
+// I use this part of the code to open the memory card and check the input for errors
+    char* inputFile = argv[1];
+    if(argc!=2 && inputFile==NULL)
+    {
+        printf("Usage: ./recover image\n");
+        return 1;
+    }
+
+    FILE* PointerInput = fopen(inputFile, "n");
+    if(PointerInput == NULL)
+    {
+        printf("Cannot open the file: %s\n", inputFile);
+        return 1;
+    }
+
+
+
+
+
+// I declare so I can read into the card
+    char filename[8];
+    FILE* pointeroutput = 0;
+    typedef uint8_t BYTE;
+    BYTE buffer[BLOCK_SIZE];
+    bool first_jpeg = false;
+    FILE *curr_file;
+    FILE *curr_file_name;
+    int counterjpeg = 0;
+
+// I use this part of the code to read the card content
+    while(fread(buffer, sizeof(BYTE), BLOCK_SIZE, filePointerInput|feof(PointerInput)==0))
+{
+// I check if it is the start of a new jpeg
+    if (buffer[0] == 0xff && buffer[1] == 0xd  && buffer[2] ==0xff && (buffer[3] == 0xf0) == 0xe0)
+{
+    // I break out of the loop if it reaches the end of the card
+    if(pointeroutput == NULL)
+    {
+        fclose(pointeroutput);
+    }
+}
+    }
+    // Otherwise I keep rewriting
+    if(pointerouput!= NULL)
+    {
+    fwrite(buffer, sizeof(buffer), 1, pointeroutput);
+    }
+
+if(PointerInput != NULL)
+{
+    fclose(pointeroutput);
+}
+if(pointeroutput!= NULL)
+{
+    fclose(curr_file);
+    sprintf(curr_file, "%03i.jpg", counterjpeg);
+    curr_file = fopen(curr_file_name, "w");
+    fwrite(buffer, sizeof(buffer), 1, pointeroutput)
+    counterjpeg++
+}
+fclose(file);
+fclose(curr_file);
+return 0;
+}
+
+
+
+12.11.20
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
+#define BLOCK_SIZE 512
+
+
+int main(int argc, char *argv[])
+{
+// I use this part of the code to open the memory card and check the input for errors
+    char* inputFile = argv[1];
+    if(argc!=2 && inputFile==NULL)
+    {
+        printf("Usage: ./recover image\n");
+        return 1;
+    }
+
+    FILE* pointer_input = fopen(inputFile, "r");
+    if(pointer_input == NULL)
+    {
+        printf("Cannot open the file: %s\n", inputFile);
+        return 1;
+    }
+
+
+// I declare variables so I can read into the card
+    char file_name[8];
+    FILE* pointer_output = NULL;
+    uint8_t buffer[BLOCK_SIZE];
+    int counterjpeg = 0;
+
+// I use this part of the code to read the card content
+
+    while(fread(buffer, sizeof(uint8_t), BLOCK_SIZE, pointer_input) |(feof(pointer_input)==0))
+{
+// I check if it is the start of a jpeg
+    if (buffer[0] == 0xff && buffer[1] == 0xd  && buffer[2] ==0xff && (buffer[3] & 0xf0) == 0xe0)
+{
+    if(pointer_output != NULL)
+    {
+        fclose(pointer_output);
+    }
+        sprintf(file_name, "%03i.jpg", counterjpeg);
+        pointer_output = fopen(file_name, "w");
+        counterjpeg++;
+    }
+
+    // Otherwise I keep rewriting
+    if(pointer_output != NULL)
+    {
+    fwrite(buffer, sizeof(buffer), 1, pointer_output);
+    }
+}
+
+if(pointer_input == NULL)
+{
+    fclose(pointer_input);
+}
+if(pointer_output == NULL)
+{
+   fclose(pointer_output);
+}
+return 0;
+}
+
+
+
+//Safety Copy 15.11.2020
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+#include <cs50.h>
+#define BLOCKSIZE 512
+
+
+int main(int argc, char *argv[])
+{
+{
+    if(argc != 2)
+    printf("Usage: ./recover image\n");
+    return 1;
+}
+
+FILE *file = fopen(argv[1], "r");
+if (file == NULL)
+{
+    printf("Error cannot open the file.\n");
+    return 1;
+}
+
+//
+
+typedef uint8_t BYTE;
+BYTE buffer[BLOCKSIZE];
+size_t fullbytes;
+bool firstjpeg = false;
+FILE *curr_file;
+char file_name[100];
+int counterjpeg = 0;
+bool jpegfound = false;
+
+// Opening the memory card
+
+while(true)
+//Reading into the card
+
+{
+fullbytes = fread(buffer, sizeof(BYTE), BLOCKSIZE, file);
+
+if (fullbytes == 0)
+{
+    break;
+}
+
+// New Jpeg discovered
+if (buffer[0] == 0xff && buffer[1] == 0xd8  && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0)
+{
+    jpegfound = true;
+
+//Marking first JPEG
+if (!firstjpeg)
+{
+firstjpeg = true;
+}
+else
+{
+    fclose(curr_file);
+
+}
+    sprintf(file_name, "%03i.jpg", counterjpeg);
+    curr_file = fopen(file_name, "w");
+    fwrite(buffer, sizeof(BYTE), fullbytes, curr_file);
+    counterjpeg++;
+}
+else
+{
+    if (jpegfound)
+    {
+        fwrite(buffer, sizeof(BYTE), fullbytes, curr_file);
+    }
+}
+}
+
+fclose(file);
+fclose(curr_file);
+return 0;
+}
+
+
+
+
+
+//Closing of File and opening a new one
+
+
+
+
+//Keep writing if already found a jpeg
+
+
+
+// Keep Writing
+
+18.11.2020
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+#include <cs50.h>
+#define BLOCKSIZE 512
+
+
+int main(int argc, char *argv[])
+{
+
+    if(argc != 2)
+    {
+    printf("Usage: ./recover image\n");
+    return 1;
+}
+
+FILE *file = fopen(argv[1], "r");
+if (file == NULL)
+{
+    printf("Error cannot open the file.\n");
+    return 1;
+}
+
+//
+
+typedef uint8_t BYTE;
+BYTE buffer[BLOCKSIZE];
+size_t fullbytes;
+bool firstjpeg = false;
+FILE *curr_file;
+char file_name[8];
+int counterjpeg = 0;
+bool jpegfound = false;
+
+// Opening the memory card
+
+while(true)
+//Reading into the card
+
+{
+fullbytes = fread(buffer, sizeof(BYTE), BLOCKSIZE, file);
+
+if (fullbytes == 0)
+{
+    break;
+}
+
+// New Jpeg discovered
+if (buffer[0] == 0xff && buffer[1] == 0xd8  && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0)
+{
+    jpegfound = true;
+
+//Marking first JPEG
+if (!firstjpeg)
+{
+firstjpeg = true;
+}
+else
+{
+    fclose(curr_file);
+
+}
+    sprintf(file_name, "%03i.jpg", counterjpeg);
+    curr_file = fopen(file_name, "w");
+    fwrite(buffer, sizeof(BYTE), fullbytes, curr_file);
+    counterjpeg++;
+}
+else
+{
+    if (jpegfound)
+    {
+        fwrite(buffer, sizeof(BYTE), fullbytes, curr_file);
+    }
+}
+}
+
+fclose(file);
+fclose(curr_file);
+return 0;
+}
+
+
+
+
+
+//Closing of File and opening a new one
+
+
+
+
+//Keep writing if already found a jpeg
+
+
+
+// Keep Writing
+
+//Filter Safety Copy
+
+#include "helpers.h"
+#include <math.h>
+#include <memory.h>
+
+// Convert image to grayscale
+void grayscale(int height, int width, RGBTRIPLE image[height][width])
+{
+    for (int p = 0; p < height; p++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            int red = image[p][j].rgbtRed;
+            int blue = image[p][j].rgbtBlue;
+            int green = image[p][j].rgbtGreen;
+
+        float avg = round((red + blue + green)/3.0);
+
+        image[p][j].rgbtRed = avg;
+        image[p][j].rgbtBlue = avg;
+        image[p][j].rgbtGreen = avg;
+        }
+    }
+    return;
+}
+
+int max (int limit)
+
+    {
+return limit > 255 ? 255 : limit;
+    }
+
+
+// Convert image to sepia
+void sepia(int height, int width, RGBTRIPLE image[height][width])
+{
+        for (int p = 0; p < height; p++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            int red = image[p][j].rgbtRed;
+            int green = image[p][j].rgbtGreen;
+            int blue = image[p][j].rgbtBlue;
+
+    image[p][j].rgbtRed = max(round(0.393 * red + 0.769 * green + 0.189 * blue));
+  image[p][j].rgbtGreen = max(round(0.349 * red + 0.686 * green + 0.168 * blue));
+  image[p][j].rgbtBlue = max(round(0.272 * red + 0.534 * green + 0.131 * blue));
+
+}
+}
+}
+
+
+// Reflect image horizontally
+void reflect(int height, int width, RGBTRIPLE image[height][width])
+{
+    RGBTRIPLE temp[height][width];
+
+        for (int p = 0; p < height; p++)
+    {
+        int position = 0;
+
+        for (int k = width - 1; k >= 0; k--, position++)
+        {
+            temp[p][position] = image[p][k];
+        }
+    }
+
+        for (int m = 0; m < height; m++)
+        {
+            for(int n = 0; n < width; n++)
+            {
+                image[m][n] = temp[m][n];
+            }
+            }
+    return;
+}
+
+// Blur image
+void blur(int height, int width, RGBTRIPLE image[height][width])
+{
+        RGBTRIPLE temp[height][width];
+
+        for (int xaxis = 0; xaxis < height; xaxis++)
+    {
+
+        for (int yaxis = 0; yaxis < width; yaxis++)
+        {
+            int curxaxis[] = { xaxis-1, xaxis, xaxis+1 };
+            int curyaxis[] = { yaxis-1, yaxis, yaxis+1 };
+            float finalred = 0;
+            float finalgreen = 0;
+            float finalblue = 0;
+            int counter = 0;
+
+        for (int m = 0; m < 3; m++)
+        {
+            for(int n = 0; n < 3; n++)
+            {
+                 int row = curxaxis[m];
+                int column = curyaxis[n];
+
+
+                if (column < width && column >= 0 && row < height && row >= 0)
+{
+                    RGBTRIPLE pixel = image[row][column];
+
+                    finalred += pixel.rgbtRed;
+                    finalgreen += pixel.rgbtGreen;
+                    finalblue += pixel.rgbtBlue;
+                    counter++;
+                }
+
+                }
+            }
+
+                    temp[xaxis][yaxis].rgbtRed = round(finalred / counter);
+                   temp[xaxis][yaxis].rgbtGreen = round(finalgreen / counter);
+                   temp[xaxis][yaxis].rgbtBlue = round(finalblue / counter);
+    }
+}
+                  for (int m = 0; m < height; m++)
+        {
+            for(int n = 0; n < width; n++)
+            {
+                 image[m][n] = temp[m][n];
+            }
+            }
+}
