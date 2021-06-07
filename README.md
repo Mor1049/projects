@@ -1,2 +1,2 @@
 # projects
-These repository contains various coding projects I did in the last years.
+These repository contains various coding projects I did in the last years. The projects include for example a Twitter Sentiment Analysis Tool, that shows what percentage of Twitter users sees a topic in a positive, negative or neutral way. The tool also shows a wordcloud, with the words that have been used most in relation to the topic. Other folders include codes that create Instagram Style Filters or can recover image files that got deleted from a memory card. The folder finance includes a fully functional website that allows the users to simulate online stock trading activity with real-time prices.
